@@ -1,0 +1,24 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "name": "kalash",
+      "src": "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot7HxfDhjxszJemkV09-5k5SDnvnzIITZk2pH8Ysp3ujArYj02QG3-ks4MmHzdYOTcAc3MlCG-lC9kL_o0MO8tJzJzCExpGB8suUG-IwZ/96fx96fdpx2x?allow_animated=1",
+      "desc": "nice",
+      "code": 1,
+      "provider": "valve corp"
+    },
+    {
+      "id": "2",
+      "name": "music",
+      "src": "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXO9B9WLbU5oA9OA1rRS_Ko6J-CHQ1yJ1VVt-7yLl42i_fJKTxHv4i3ldXSw6OmN-OHkmkFucBw2rqYp9i7mFqzYilkTt8/330x192?allow_animated=1",
+      "desc": "slash ba-bang",
+      "code": 2,
+      "provider": "valve corp"
+    }
+  ],
+  "profile": {
+    "name": "Чернышова Дана",
+    "group": "6409"
+  }
+}
