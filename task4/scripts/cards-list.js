@@ -8,9 +8,20 @@ class Card {
     }
 }
 
+async function fetchProfile(){
+    try {
+        let user = await fetch('http://localhost:3000/profile').then( (response) =>  response.json());
+        document.getElementById('profile').textContent = user.group + " " + user.name;
+    } catch (err) {
+        alert("can't fetch author" + err);
+    }
+}
 
-function renderCards() {
-    let cardsArray = JSON.parse(window.localStorage.getItem("cards"));
+
+
+function renderCards(cardsArray) {
+        //let cardsArray = await fetch('http://localhost:3000/posts').then( (response) =>  response.json());
+    //let cardsArray = JSON.parse(window.localStorage.getItem("cards"));
 
     if (cardsArray === null)
         return;
@@ -75,6 +86,18 @@ function renderCards() {
     }
 }
 
+async function fetchCards () {
+    try {
+        let cards = await fetch('http://localhost:3000/posts').then( (response) =>  response.json());
+        //for (let card of (await cards ? await cards : []) ){
+         //   drawCard(card);
+        //}
+	renderCards(cards)
+    } catch (err) {
+        alert("can't fetch cards" + err);
+    }
+}
+
 
 function preEdit(event) {
     let id = event.target.id.substring(8);
@@ -123,28 +146,25 @@ function validateForm(cardsArray, isCreate) {
 }
 
 
-function editCard(event) {
-    let cardsArray = JSON.parse(window.localStorage.getItem("cards"));
-
-    if (cardsArray === null) {
-        cardsArray = [];
+async function editCard(event) {
+    let card = serializeForm(applicantForm, new Card());
+    try {
+        await fetch(`http://localhost:3000/posts/${event.target.editId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              },
+            body: JSON.stringify(card)
+        }).then(() => {
+            document.getElementById('submit-button').classList.remove('invisible');
+            document.getElementById('edit-button').classList.add('invisible');
+            location.reload();
+        })
+    } catch (err) {
+        alert(err);
     }
-
-    let isCreate = !isFormEmpty() && document.getElementById("approveBtn").idx === undefined;
-
-    if (!validateForm(cardsArray, isCreate))
-        return;
-
-    if (isCreate) {
-        cardsArray[cardsArray.length] = serializeCard();
-    } else {
-        cardsArray[event.target.idx] = serializeCard();
-    }
-
-    updateLocalStorage(cardsArray);
-
+    
 }
-
 
 function serializeCard() {
     return new Card(
@@ -157,16 +177,16 @@ function serializeCard() {
 }
 
 
-function deleteCard(event) {
-    if (document.getElementById("deleteBtn").idx === undefined)
-        return;
-
-    let cardsArray = JSON.parse(window.localStorage.getItem("cards"));
-    cardsArray.splice(event.target.idx, 1);
-
-    updateLocalStorage(cardsArray);
+async function deleteCard(event) {
+    try {
+        await fetch(`http://localhost:3000/posts/${event.target.delId}`, {
+            method: 'DELETE'
+        }).then(() => location.reload())
+    } catch (err) {
+        alert(err);
+    }
+    
 }
-
 
 function clearForm() {
     document.getElementsByName('id')[0].value = "";
@@ -197,6 +217,11 @@ function updateLocalStorage(cardsArray) {
 
 
 const handOutBtn = document.getElementById('handOutBtn');
-handOutBtn.addEventListener('click', handOutCards);
+handOutBtn.addEventListener('click', fetchCards);
+function fetchAll() {
+fetchProfile();
+fetchCards();
+}
 
-window.onload = renderCards;
+
+window.onload = fetchAll;
