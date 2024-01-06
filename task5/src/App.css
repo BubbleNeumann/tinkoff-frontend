@@ -1,0 +1,14 @@
+.app {
+  font-size: 16px;
+}
+
+p {
+  font-family: 'Roboto';
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 30% 60%;
+  color: #7FFF00;
+  font-family: 'Roboto';
+}
